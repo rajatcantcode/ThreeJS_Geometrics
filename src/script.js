@@ -40,8 +40,72 @@ const scene = new THREE.Scene();
 /**
  * Creating our own Buffer Geometry
  * Before Creating the geometry, we need to understand how to store buffer gemotry data
- * going to use - Float32Array - typed array, can only store floats , fixed lengths , easier to handle for the computer
+ * going to use - Float32Array
+ *  - type is array, can only store floats value , fixed lengths , easier to handle for the computer
+ *
+ * There are two ways of creating and filling a value of Float32Array
+ * 1. Specify a length and then fill the array
+ * 2. Directly put the array
+ * Float32Array([
+ *   0,0,0
+ *   0,1,0,
+ *   1,0,0
+ * ]);
  */
+
+// //We are creating a triangle
+// const positionsArray = new Float32Array(9);
+// //First Vertex
+// positionsArray[0] = 0; //x
+// positionsArray[1] = 0; //y
+// positionsArray[2] = 0; //z
+
+// //Second Vertex
+// positionsArray[3] = 0; //x
+// positionsArray[4] = 1; //y
+// positionsArray[5] = 0; //z
+
+// //Third Vertex
+// positionsArray[6] = 1; //x
+// positionsArray[7] = 0; //y
+// positionsArray[8] = 0; //z
+
+// //We can now convert Float32Array to BufferAttribute
+
+// //3 is the number of components per vertex
+// const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
+
+// const geometry = new THREE.BufferGeometry();
+
+// //We can add this BufferAttribute to our BufferGeometry
+// geometry.setAttribute("position", positionsAttribute);
+
+// //Note : Position is the name that will be used in the shaders as an attribute
+// //Three JS has built-in shaders when we are showing the triangle on viewport
+// //it's three js who is handling this(GPU, Three JS, Shaders)
+// const material = new THREE.MeshBasicMaterial({
+//   color: 0xff0000,
+//   wireframe: true,
+// });
+
+// const mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
+
+const geometry = new THREE.BufferGeometry();
+const count = 10; // number of triangles we want
+const positionsArray = new Float32Array(count * 9);
+for (let i = 0; i < count * 9; i++) {
+  positionsArray[i] = Math.random() * 5;
+}
+const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
+geometry.setAttribute("position", positionsAttribute);
+
+const material = new THREE.MeshBasicMaterial({
+  color: 0xffffff,
+  wireframe: true,
+});
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
 /**
  * Sizes
